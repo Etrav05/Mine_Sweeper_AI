@@ -45,6 +45,19 @@ Evan Travis
 
 ## Version History
 
+
+https://github.com/user-attachments/assets/00379284-0df8-45e1-99f2-68e79f9fc893
+
+* 0.5.0
+  * Fixed flagging (again)
+  * Added a function to click solved cells (value == amount of flags in the 3x3 area)
+  * Redid the logic:
+    * AI will now create a 2d array of the game board
+    * Check for flags
+    * Click solved cells
+    * Repeat
+  * Slow at the moment (~12sec)
+
 * 0.4.1
   * Flagging function now works properly
 
