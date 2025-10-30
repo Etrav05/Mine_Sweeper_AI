@@ -20,7 +20,7 @@ rows, columns = 9, 9
 change = 32
 startX, startY = 258, 256
 numColX, numColY = 18, 21  ## how much you have to move to find the num
-flagX, flagY = 8, 8
+flagX, flagY = 8, 9
 
 unsolved = 255  ## unsolved block colour
 ## one   -   0,   0, 255
@@ -127,7 +127,7 @@ def win_lose(plays):
 
     return state, plays
 
-def check_around_cell(grid, i, j):
+def check_around_cell(grid, i, j, image):
     unknown_count = 0
     flag_count = 0
 
@@ -141,15 +141,18 @@ def check_around_cell(grid, i, j):
                 x = startX + nj * 32
                 y = startY + ni * 32
 
-                if pyautogui.pixel(x, y) == (255, 255, 255):
+                color = image.getpixel((x, y))
+                if color == (255, 255, 255):
                     unknown_count += 1
 
-                if pyautogui.pixel(x + flagX, y + flagY) == (255, 0, 0):
+                if image.getpixel((x + flagX, y + flagY)) == (255, 0, 0):
                     flag_count += 1
 
     return unknown_count, flag_count
 
-def flag_around_cell(grid, i, j):
+def flag_around_cell(grid, i, j, image):
+    flagged_any = False
+
     for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
         for dj in [-1, 0, 1]:
             if di == 0 and dj == 0:  ## skip the cell itself
@@ -161,46 +164,85 @@ def flag_around_cell(grid, i, j):
                     x = startX + nj * 32
                     y = startY + ni * 32
 
-                    if pyautogui.pixel(x + flagX, y + flagY) != (255, 0, 0):  ## Check if not already flagged
-                        right_click(x, y)
+                    if image.getpixel((x + flagX, y + flagY)) != (255, 0, 0) or grid[ni][nj] != 'f':  ## Check if not already flagged
+                        pyautogui.rightClick(x, y)
+                        time.sleep(0.05)
+                        flagged_any = True
+                        grid[ni][nj] = 'f'
 
-def click_around_cell(grid, i, j):
-    for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
-        for dj in [-1, 0, 1]:
-            if di == 0 and dj == 0:  ## skip the cell itself
-                continue
-
-            ni, nj = i + di, j + dj
-            if 0 <= ni < rows and 0 <= nj < columns:
-                if grid[ni][nj] == '-':
-                    click(startX + nj * 32, startY + ni * 32)
+    return flagged_any
 
 def flag_area_around_cell(grid):
-    grid = define_map()
+    image = pyautogui.screenshot()  ## just capture one image for performance
+    flagged = False
 
     for i in range(9):
         for j in range(9):
-            if grid[i][j] != '-' and grid[i][j] != 0:
-                unknown_count, flag_count = check_around_cell(grid, i, j)
+            val = grid[i][j]
+            if val == '-' or val == 0:
+                continue
 
-                if grid[i][j] == unknown_count:   ## if the value of a cell == the amount of unknowns
-                    flag_around_cell(grid, i, j)  ## that means we can click the unknown cell
+            unknown_count, flag_count = check_around_cell(grid, i, j, image)
+
+            ## skip useless cells
+            if flag_count == val or unknown_count == 0:
+                continue
+
+            if val == unknown_count:  ## if the value of a cell == the amount of unknowns
+                if flag_around_cell(grid, i, j, image):  ## that means we can click the unknown cell
+                    flagged = True
+
+    return flagged
+
+def click_solved_cell(grid):
+    image = pyautogui.screenshot()  # capture one screenshot for performance
+
+    for i in range(9):
+        for j in range(9):
+            val = grid[i][j]
+            if val == '-' or val == 0:
+                continue
+
+            unknown_count, flag_count = check_around_cell(grid, i, j, image)
+
+            if flag_count == val and unknown_count != 0:
+                for di in [-1, 0, 1]:
+                    for dj in [-1, 0, 1]:
+                        if di == 0 and dj == 0:
+                            continue
+                        ni, nj = i + di, j + dj
+                        if 0 <= ni < rows and 0 <= nj < columns:
+                            if grid[ni][nj] == '-':  # unknown cell
+                                x = startX + nj * 32
+                                y = startY + ni * 32
+                                pyautogui.leftClick(x, y)
+                                time.sleep(0.05)
+                                grid[ni][nj] = '0'  # mark clicked
+
+def auto_flag_loop():
+    global running
+
+    plays = 0
+    grid = define_map()
+
+    while running:
+        changed = flag_area_around_cell(grid)  ## loop through until there are no changes
+        state, plays = win_lose(plays)
+
+        if not changed:
+            click_solved_cell(grid)
+            print("No more flags")
+            break
 
 def main():
     global running
-    plays = 0
     state = False
-
-    grid = define_map()
 
     threading.Thread(target=watch_for_quit, daemon=True).start()  ## start another thread so we can force quit
 
-    while running:  ## and not state:  ## Kill button
-        flag_area_around_cell(grid)
-        ## click_each_cell()
-        ## random_clicks()
-        state, plays = win_lose(plays)
-        display_map(grid)
+    while running and not state:
+        click(startX + 4 * 32, startY + 4 * 32)
+        auto_flag_loop()
 
 if __name__ == "__main__":
     main()
