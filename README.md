@@ -25,7 +25,7 @@ TODO
 
 * Minesweeper tab is docked on the left side of your screen
 * Game display is set to 200%
-* Zoom in on tab is set to 100%
+* Zoom in on the tab is set to 100%
 ```
 code blocks for commands
 ```
@@ -47,8 +47,8 @@ Evan Travis
 
 
 * 0.3.2
- * Game board is now saved as a 2d array
- * Added a function to display this 2d array
+  * Game board is now saved as a 2d array
+  * Added a function to display this 2d array
 
 * 0.3.1
   * Added a function to define the game board
