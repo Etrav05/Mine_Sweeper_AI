@@ -62,16 +62,16 @@ def random_clicks():
 
     click(startX + random_x, startY + random_y)
 
-def check_cell_state(x, y):
+def check_cell_state(x, y, image):
     num = 0
 
-    if pyautogui.pixel(x + flagX, y + flagY) == (255, 0, 0):
+    if image.getpixel((x + flagX, y + flagY)) == (255, 0, 0):
         return 'f'
 
-    if pyautogui.pixel(x, y) == (255, 255, 255):
+    if image.getpixel((x, y)) == (255, 255, 255):
         return '-'
 
-    match pyautogui.pixel(x + numColX, y + numColY):
+    match image.getpixel((x + numColX, y + numColY)):
         case (0, 0, 255):      ## Blue 1
             num = 1
         case (0, 123, 0):      ## Green 2
@@ -91,17 +91,18 @@ def check_cell_state(x, y):
 
     return num
 
-def define_map():
-    grid = [[0 for i in range(9)] for j in range(9)]
+def define_map(image):
+    image = pyautogui.screenshot()  # capture current Minesweeper window
+    grid = []
 
-    for i in range(9):
-        y = startY + i * 32
-
-        for j in range(9):
-            x = startX + j * 32
-            move_mouse(x, y)
-            num = check_cell_state(x, y)
-            grid[i][j] = num
+    for i in range(rows):
+        row = []
+        y = startY + i * change
+        for j in range(columns):
+            x = startX + j * change
+            cell_state = check_cell_state(x, y, image)
+            row.append(cell_state)
+        grid.append(row)
 
     return grid
 
@@ -166,7 +167,6 @@ def flag_around_cell(grid, i, j, image):
 
                     if image.getpixel((x + flagX, y + flagY)) != (255, 0, 0) or grid[ni][nj] != 'f':  ## Check if not already flagged
                         pyautogui.rightClick(x, y)
-                        time.sleep(0.05)
                         flagged_any = True
                         grid[ni][nj] = 'f'
 
@@ -195,7 +195,7 @@ def flag_area_around_cell(grid):
     return flagged
 
 def click_solved_cell(grid):
-    image = pyautogui.screenshot()  # capture one screenshot for performance
+    image = pyautogui.screenshot()  ## capture one screenshot for performance
 
     for i in range(9):
         for j in range(9):
@@ -212,18 +212,18 @@ def click_solved_cell(grid):
                             continue
                         ni, nj = i + di, j + dj
                         if 0 <= ni < rows and 0 <= nj < columns:
-                            if grid[ni][nj] == '-':  # unknown cell
+                            if grid[ni][nj] == '-':  ## unknown cell
                                 x = startX + nj * 32
                                 y = startY + ni * 32
                                 pyautogui.leftClick(x, y)
-                                time.sleep(0.05)
-                                grid[ni][nj] = '0'  # mark clicked
+                                grid[ni][nj] = '0'  ## mark solved
 
 def auto_flag_loop():
     global running
+    image = pyautogui.screenshot()
 
     plays = 0
-    grid = define_map()
+    grid = define_map(image)
 
     while running:
         changed = flag_area_around_cell(grid)  ## loop through until there are no changes

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Flagging actually works now (:">
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
@@ -21,6 +21,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -153,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761858094382</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)">
+      <option name="closed" value="true" />
+      <created>1761861218391</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761861218391</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -164,7 +173,8 @@
     <MESSAGE value="Game board is now saved in a 2d array&#10;&#10;Added function to display this 2d array" />
     <MESSAGE value="Renamed functions&#10;&#10;Started creating functions to give the AI the rules of minesweeper&#10;&#10;Firstly, how to flag bombs, next, working on clicking unknown cells when the number of flags in the 3x3 around a cell is equal to the number in the center cell" />
     <MESSAGE value="Flagging actually works now (:" />
-    <option name="LAST_COMMIT_MESSAGE" value="Flagging actually works now (:" />
+    <MESSAGE value="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
