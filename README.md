@@ -46,6 +46,9 @@ Evan Travis
 ## Version History
 
 * 0.5.0
+
+https://github.com/user-attachments/assets/00379284-0df8-45e1-99f2-68e79f9fc893
+
   * Fixed flagging (again)
   * Added a function to click solved cells (value == amount of flags in the 3x3 area)
   * Redid the logic:
