@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Created function to define the game board&#10;&#10;This function checks over each block and detects its value:&#10;Unsolved, solved, 1, 2, 3, ..., 8">
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,13 +43,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.MineSweeping.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.MineSweeping.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="MineSweeping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MineSweeper_ML" />
@@ -120,13 +120,22 @@
       <option name="project" value="LOCAL" />
       <updated>1761784487142</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Created function to define the game board&#10;&#10;This function checks over each block and detects its value:&#10;Unsolved, solved, 1, 2, 3, ..., 8">
+      <option name="closed" value="true" />
+      <created>1761833046997</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761833046997</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board" />
     <MESSAGE value="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game" />
     <MESSAGE value="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main" />
+    <MESSAGE value="Created function to define the game board&#10;&#10;This function checks over each block and detects its value:&#10;Unsolved, solved, 1, 2, 3, ..., 8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created function to define the game board&#10;&#10;This function checks over each block and detects its value:&#10;Unsolved, solved, 1, 2, 3, ..., 8" />
   </component>
 </project>

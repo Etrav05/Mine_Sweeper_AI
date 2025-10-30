@@ -74,6 +74,8 @@ def checkNum(x, y):
     return num
 
 def defineMap():
+    grid = [[0 for _ in range(9)] for _ in range(9)]
+
     for i in range(9):
         y = startY + i * 32
 
@@ -81,7 +83,14 @@ def defineMap():
             x = startX + j * 32
             moveMouse(x, y)
             num = checkNum(x, y)
-            print(f"{num} ", end="")  ## dont add a new line
+            grid[i][j] = num
+
+    return grid
+
+def dispayMap(grid):
+    for i in range(9):
+        for j in range(9):
+            print(f"{grid[i][j]}  ", end="")
         print()  ## new line
 
 def winLose(plays):
@@ -104,7 +113,8 @@ def main():
     plays = 0
     state = False
 
-    defineMap()
+    grid = defineMap()
+    dispayMap(grid)
 
     while not keyboard.is_pressed('q') and not state:  ## Kill button
         ## clickEachBox()
