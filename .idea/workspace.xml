@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game">
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
@@ -23,34 +23,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Etrav05"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Etrav05&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Etrav05/Mine_Sweeper_AI.git",
-    "accountId": "d0c6050d-c639-4c30-b0af-23122810c9ef"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Etrav05/Mine_Sweeper_AI.git&quot;,
+    &quot;accountId&quot;: &quot;d0c6050d-c639-4c30-b0af-23122810c9ef&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="34l40EE0JMR16ixeVulYZqUD0Q8" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.MineSweeping.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.MineSweeping.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MineSweeping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MineSweeper_ML" />
@@ -112,12 +112,21 @@
       <option name="project" value="LOCAL" />
       <updated>1761782315315</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main">
+      <option name="closed" value="true" />
+      <created>1761784487142</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761784487142</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board" />
     <MESSAGE value="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game" />
+    <MESSAGE value="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored the modularity of the solution&#10;&#10;Solving, clicking, and end game functions are now defined first, then used in main" />
   </component>
 </project>
