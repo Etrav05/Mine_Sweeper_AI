@@ -45,6 +45,8 @@ Evan Travis
 
 ## Version History
 
+* 0.4.1
+  * Flagging function now works properly
 
 * 0.4.0
   * Renamed functions
