@@ -46,6 +46,10 @@ Evan Travis
 
 ## Version History
 
+* 0.2.1
+   * Refactored the solution
+   * Followed better modularity - created functions to be called in the main  
+
 * 0.2
     * Added ability to randomly click tiles on a 9x9 board
     * Auto resets lost games
