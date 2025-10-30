@@ -47,6 +47,10 @@ Evan Travis
 ## Version History
 
 
+* 0.3.2
+ * Game board is now saved as a 2d array
+ * Added a function to display this 2d array
+
 * 0.3.1
   * Added a function to define the game board
   * Detects all block states: Unsolved, solved, 1, 2, 3, ..., 8
