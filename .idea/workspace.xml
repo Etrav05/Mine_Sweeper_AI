@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board">
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
@@ -51,6 +51,35 @@
     "git-widget-placeholder": "master"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="MineSweeping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MineSweeper_ML" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MineSweeping.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.MineSweeping" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,11 +104,20 @@
       <option name="project" value="LOCAL" />
       <updated>1761780204885</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game">
+      <option name="closed" value="true" />
+      <created>1761782315315</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761782315315</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board" />
+    <MESSAGE value="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Now clicks randomly on the 9x9 gameboard &#10;&#10;Took 4406 trys to complete its first game" />
   </component>
 </project>
