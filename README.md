@@ -46,6 +46,12 @@ Evan Travis
 
 ## Version History
 
+
+* 0.3.1
+  * Added a function to define the game board
+  * Detects all block states: Unsolved, solved, 1, 2, 3, ..., 8
+  * Bombs are ignored at the moment
+  
 * 0.2.1
    * Refactored the solution
    * Followed better modularity - created functions to be called in the main  
