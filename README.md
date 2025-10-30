@@ -46,6 +46,11 @@ Evan Travis
 ## Version History
 
 
+* 0.4.0
+  * Renamed functions
+  * Added a function to place flags around a cell
+  * Started a function to click cells which are determined to be safe
+
 * 0.3.2
   * Game board is now saved as a 2d array
   * Added a function to display this 2d array
