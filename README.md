@@ -22,7 +22,6 @@ TODO
 
 ### Executing program
 
-TODO
 
 * Minesweeper tab is docked on the left side of your screen
 * Game display is set to 200%
