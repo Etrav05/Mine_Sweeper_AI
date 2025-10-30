@@ -8,10 +8,11 @@ import win32api, win32con
 ## Change = 32
 ## Unknown block RGB = 189, 189, 189
 
-gameBoard = 9
+rows, columns = 9, 9
 change = 32
 startX, startY = 258, 256
 numColX, numColY = 18, 21  ## how much you have to move to find the num
+flagX, flagY = 8, 8
 
 unsolved = 255  ## unsolved block colour
 ## one   -   0,   0, 255
@@ -32,23 +33,32 @@ def click(x, y):
     time.sleep(0.01)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
 
-def moveMouse(x, y):
+def right_click(x, y):
+    win32api.SetCursorPos((x, y))
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0)
+    time.sleep(0.01)
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0)
+
+def move_mouse(x, y):
     win32api.SetCursorPos((x, y))
 
-def clickEachBox():
+def click_each_cell():
     for i in range(9):
         y = startY + i * 32
         for j in range(9):
            click(startX + j * 32, y)
 
-def randomClicks():
+def random_clicks():
     random_x = random.randint(0, 8) * 32
     random_y = random.randint(0, 8) * 32
 
     click(startX + random_x, startY + random_y)
 
-def checkNum(x, y):
+def check_cell_state(x, y):
     num = 0
+
+    if pyautogui.pixel(x + flagX, y + flagY) == (255, 0, 0):
+        return 'f'
 
     if pyautogui.pixel(x, y) == (255, 255, 255):
         return '-'
@@ -73,27 +83,27 @@ def checkNum(x, y):
 
     return num
 
-def defineMap():
-    grid = [[0 for _ in range(9)] for _ in range(9)]
+def define_map():
+    grid = [[0 for i in range(9)] for j in range(9)]
 
     for i in range(9):
         y = startY + i * 32
 
         for j in range(9):
             x = startX + j * 32
-            moveMouse(x, y)
-            num = checkNum(x, y)
+            move_mouse(x, y)
+            num = check_cell_state(x, y)
             grid[i][j] = num
 
     return grid
 
-def dispayMap(grid):
+def dispay_map(grid):
     for i in range(9):
         for j in range(9):
             print(f"{grid[i][j]}  ", end="")
         print()  ## new line
 
-def winLose(plays):
+def win_lose(plays):
     state = False
 
     ## check frown/glasses (win/lose)
@@ -109,17 +119,66 @@ def winLose(plays):
 
     return state, plays
 
+def check_around_cell(grid, i, j):
+    unknown_count = 0
+    flag_count = 0
+
+    for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:  ## skip the cell itself
+                continue
+
+            ni, nj = i + di, j + dj  ## using each offset
+            if 0 <= ni < rows and 0 <= nj < columns:  ## stay in the game bounds
+                if grid[ni][nj] == '-':  ## '-' == unclicked tile
+                    unknown_count += 1
+                if grid[ni][nj] == 'f':  ## 'f' == flaged tile
+                    flag_count += 1
+
+    return unknown_count, flag_count
+
+def flag_click_around_cell(grid, i, j):
+    for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:  ## skip the cell itself
+                continue
+
+            ni, nj = i + di, j + dj
+            if 0 <= ni < rows and 0 <= nj < columns:
+                if grid[ni][nj] == '-':
+                    right_click(startX + nj * 32, startY + ni * 32)
+
+def click_around_cell(grid, i, j):
+    for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
+        for dj in [-1, 0, 1]:
+            if di == 0 and dj == 0:  ## skip the cell itself
+                continue
+
+            ni, nj = i + di, j + dj
+            if 0 <= ni < rows and 0 <= nj < columns:
+                if grid[ni][nj] == '-':
+                    click(startX + nj * 32, startY + ni * 32)
+
+def flag_area_around_cell(grid):
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] != '-' and grid[i][j] != 0:
+                unknown_count, flag_count = check_around_cell(grid, i, j)
+
+                if grid[i][j] == flag_count:  ## if the value of a cell == the amount of unknowns
+                    click_around_cell(grid, i, j)                ## that means we can click the unknown cell
+
 def main():
     plays = 0
     state = False
 
-    grid = defineMap()
-    dispayMap(grid)
-
-    while not keyboard.is_pressed('q') and not state:  ## Kill button
-        ## clickEachBox()
-        ## randomClicks()
-        state, plays = winLose(plays)
+    while not keyboard.is_pressed('q'):  ## and not state:  ## Kill button
+        grid = define_map()
+        flag_area_around_cell(grid)
+        ## click_each_cell()
+        ## random_clicks()
+        state, plays = win_lose(plays)
+        dispay_map(grid)
 
 if __name__ == "__main__":
     main()
