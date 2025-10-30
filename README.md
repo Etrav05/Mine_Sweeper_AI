@@ -23,8 +23,10 @@ TODO
 ### Executing program
 
 TODO
-* How to run the program
-* Step-by-step bullets
+
+* Minesweeper tab is docked on the left side of your screen
+* Game display is set to 200%
+* Zoom in on tab is set to 100%
 ```
 code blocks for commands
 ```
@@ -45,8 +47,11 @@ Evan Travis
 ## Version History
 
 * 0.2
-    TODO
-    * See [commit change]() or See [release history]()
+    * Added ability to randomly click tiles on a 9x9 board
+    * Auto resets lost games
+    * Took 4406 retries to beat its first game (with a score of 1sec)
+    * <img width="330" height="125" alt="image" src="https://github.com/user-attachments/assets/48d57273-3f6c-4b0d-9586-e43a7491e1b1" />
+
 * 0.1
     * Initial Release
 
