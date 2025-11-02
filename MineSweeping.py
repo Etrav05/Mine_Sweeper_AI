@@ -91,7 +91,7 @@ def check_cell_state(x, y, image):
 
     return num
 
-def define_map(image):
+def define_map():
     image = pyautogui.screenshot()  # capture current Minesweeper window
     grid = []
 
@@ -128,7 +128,7 @@ def win_lose(plays):
 
     return state, plays
 
-def check_around_cell(grid, i, j, image):
+def check_around_cell(i, j, image):
     unknown_count = 0
     flag_count = 0
 
@@ -166,7 +166,7 @@ def flag_around_cell(grid, i, j, image):
                     y = startY + ni * 32
 
                     if image.getpixel((x + flagX, y + flagY)) != (255, 0, 0) or grid[ni][nj] != 'f':  ## Check if not already flagged
-                        pyautogui.rightClick(x, y)
+                        right_click(x, y)
                         flagged_any = True
                         grid[ni][nj] = 'f'
 
@@ -182,7 +182,7 @@ def flag_area_around_cell(grid):
             if val == '-' or val == 0:
                 continue
 
-            unknown_count, flag_count = check_around_cell(grid, i, j, image)
+            unknown_count, flag_count = check_around_cell(i, j, image)
 
             ## skip useless cells
             if flag_count == val or unknown_count == 0:
@@ -203,7 +203,7 @@ def click_solved_cell(grid):
             if val == '-' or val == 0:
                 continue
 
-            unknown_count, flag_count = check_around_cell(grid, i, j, image)
+            unknown_count, flag_count = check_around_cell(i, j, image)
 
             if flag_count == val and unknown_count != 0:
                 for di in [-1, 0, 1]:
@@ -215,7 +215,7 @@ def click_solved_cell(grid):
                             if grid[ni][nj] == '-':  ## unknown cell
                                 x = startX + nj * 32
                                 y = startY + ni * 32
-                                pyautogui.leftClick(x, y)
+                                click(x, y)
                                 grid[ni][nj] = '0'  ## mark solved
 
 def auto_flag_loop():
@@ -223,7 +223,7 @@ def auto_flag_loop():
     image = pyautogui.screenshot()
 
     plays = 0
-    grid = define_map(image)
+    grid = define_map()
 
     while running:
         changed = flag_area_around_cell(grid)  ## loop through until there are no changes
