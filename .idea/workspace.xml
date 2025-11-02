@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)">
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
@@ -162,8 +162,27 @@
       <option name="project" value="LOCAL" />
       <updated>1761861218391</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it">
+      <option name="closed" value="true" />
+      <created>1761863374500</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1761863374500</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Imported current libraries needed&#10;&#10;Defined a click function&#10;&#10;Made a simple loop to click all squares of a 9x9 board" />
@@ -174,7 +193,8 @@
     <MESSAGE value="Renamed functions&#10;&#10;Started creating functions to give the AI the rules of minesweeper&#10;&#10;Firstly, how to flag bombs, next, working on clicking unknown cells when the number of flags in the 3x3 around a cell is equal to the number in the center cell" />
     <MESSAGE value="Flagging actually works now (:" />
     <MESSAGE value="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)" />
+    <MESSAGE value="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

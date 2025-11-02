@@ -91,8 +91,7 @@ def check_cell_state(x, y, image):
 
     return num
 
-def define_map():
-    image = pyautogui.screenshot()  # capture current Minesweeper window
+def define_map(image):
     grid = []
 
     for i in range(rows):
@@ -149,7 +148,7 @@ def check_around_cell(i, j, image):
                 if image.getpixel((x + flagX, y + flagY)) == (255, 0, 0):
                     flag_count += 1
 
-    return unknown_count, flag_count
+    return flag_count, unknown_count
 
 def flag_around_cell(grid, i, j, image):
     flagged_any = False
@@ -234,15 +233,80 @@ def auto_flag_loop():
             print("No more flags")
             break
 
+ok_buttonX = 560
+ok_buttonY = 240
+
+## Functions to make this program a Reinforcement Learning AI
+
+def find_first_cell(grid):
+    unknowns = []  ## A list of all hidden cells ('-')
+    for i in range(rows):
+        for j in range(columns):
+            if grid[i][j] == '-':
+                unknowns.append((i, j))
+
+    i, j = random.choice(unknowns)  ## randomly choose one of the unknown cells
+    return i, j, -1  ## unknowns == -1  (flags == 9)
+
+def reset():
+    keyboard.write("Etrav")  ## type name for wins
+
+    click(ok_buttonX, ok_buttonY)
+    click(winFaceX, winFaceY)
+    click(400, 400)  ## center of the board
+
+    image = pyautogui.screenshot()  # capture current Minesweeper window
+
+    grid = define_map(image)
+    i, j, cell_value = find_first_cell(grid)
+    flags, unknowns = check_around_cell(i, j, image)
+
+    return cell_value, flags, unknowns
+
+def new_state_finder(image):
+    grid = define_map(image)
+    i, j, cell_value = find_first_cell(grid)
+    flags, unknowns = check_around_cell(i, j, image)
+
+    return cell_value, flags, unknowns
+
+def choose_action(state):
+    actions = ["click", "flag", "skip"]
+    return random.choice(actions)
+
+def step(action):
+
+    return new_state, reward, done
+
+def preform_action(action):
+    match action
+        case (0, 0, 255):  ## Blue 1
+            num = 1
+        case (0, 123, 0):  ## Green 2
+            num = 2
+        case (255, 0, 0):  ## Red 3
+            num = 3
+
 def main():
     global running
-    state = False
-
     threading.Thread(target=watch_for_quit, daemon=True).start()  ## start another thread so we can force quit
 
-    while running and not state:
-        click(startX + 4 * 32, startY + 4 * 32)
-        auto_flag_loop()
+    for training in range(10):
+        state = reset()
+        done = False
+        while running and not done:
+            cell_value, flags, unknowns = state
+
+            action = choose_action(state)
+
+            preform_action(action)
+
+
+            """
+            new_state, reward, done = step(action)
+            update_Q(state, action, reward, new_state)
+            state = new_state  ## get the new state
+            """
 
 if __name__ == "__main__":
     main()
