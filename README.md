@@ -46,7 +46,10 @@ Evan Travis
 ## Version History
 
 
-https://github.com/user-attachments/assets/00379284-0df8-45e1-99f2-68e79f9fc893
+* 0.6.0
+  * Refactored functions to now take a single screenshot and use "image.getpixel"
+  * Refactored grid_definition function to now create the grid cell by cell (rather than an initial 9x9 to be filled)
+  * Saves quite a lot of time, AI is now averaging ~7 seconds
 
 * 0.5.0
   * Fixed flagging (again)
@@ -57,6 +60,8 @@ https://github.com/user-attachments/assets/00379284-0df8-45e1-99f2-68e79f9fc893
     * Click solved cells
     * Repeat
   * Slow at the moment (~12sec)
+
+https://github.com/user-attachments/assets/00379284-0df8-45e1-99f2-68e79f9fc893
 
 * 0.4.1
   * Flagging function now works properly
