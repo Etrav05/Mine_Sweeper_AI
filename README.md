@@ -45,6 +45,12 @@ Evan Travis
 
 ## Version History
 
+* 0.6.1
+  * 2 functions were still using pyautogui's click function, updated those
+
+https://github.com/user-attachments/assets/b5daddf4-4ace-4293-a5e5-4e65dfdba72a
+
+
 
 * 0.6.0
   * Refactored functions to now take a single screenshot and use "image.getpixel"
