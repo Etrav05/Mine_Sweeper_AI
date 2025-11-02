@@ -45,6 +45,16 @@ Evan Travis
 
 ## Version History
 
+
+* 0.7.0
+  * Started to refactor the program into a real AI
+  * Reinforcement learning algorithm --> Q-learning
+  * Added functions to:
+    * Reset the game board
+    * Find the game board's new state
+    * Choose a random action (temp)
+  * Started implementing a perform action function
+
 * 0.6.1
   * 2 functions were still using pyautogui's click function, updated those
   * This was slowing the program down by so so much
