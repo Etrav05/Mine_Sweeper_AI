@@ -47,6 +47,7 @@ Evan Travis
 
 * 0.6.1
   * 2 functions were still using pyautogui's click function, updated those
+  * This was slowing the program down by so so much
 
 https://github.com/user-attachments/assets/b5daddf4-4ace-4293-a5e5-4e65dfdba72a
 
@@ -55,13 +56,13 @@ https://github.com/user-attachments/assets/b5daddf4-4ace-4293-a5e5-4e65dfdba72a
 * 0.6.0
   * Refactored functions to now take a single screenshot and use "image.getpixel"
   * Refactored grid_definition function to now create the grid cell by cell (rather than an initial 9x9 to be filled)
-  * Saves quite a lot of time, AI is now averaging ~7 seconds
+  * Saves quite a lot of time, program is now averaging ~7 seconds
 
 * 0.5.0
   * Fixed flagging (again)
   * Added a function to click solved cells (value == amount of flags in the 3x3 area)
   * Redid the logic:
-    * AI will now create a 2d array of the game board
+    * program will now create a 2d array of the game board
     * Check for flags
     * Click solved cells
     * Repeat
