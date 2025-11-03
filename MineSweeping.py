@@ -236,8 +236,7 @@ def auto_flag_loop():
 ok_buttonX = 560
 ok_buttonY = 240
 
-## Functions to make this program a Reinforcement Learning AI
-
+## Functions to make this program a Reinforcement Learning AI --> Q-learning
 def find_first_cell(grid):
     unknowns = []  ## A list of all hidden cells ('-')
     for i in range(rows):
@@ -255,37 +254,63 @@ def reset():
     click(winFaceX, winFaceY)
     click(400, 400)  ## center of the board
 
-    image = pyautogui.screenshot()  # capture current Minesweeper window
+    image = pyautogui.screenshot()
 
     grid = define_map(image)
     i, j, cell_value = find_first_cell(grid)
     flags, unknowns = check_around_cell(i, j, image)
 
-    return cell_value, flags, unknowns
+    return cell_value, i, j, flags, unknowns
 
 def new_state_finder(image):
     grid = define_map(image)
     i, j, cell_value = find_first_cell(grid)
     flags, unknowns = check_around_cell(i, j, image)
 
-    return cell_value, flags, unknowns
+    return cell_value, i, j, flags, unknowns
 
 def choose_action(state):
     actions = ["click", "flag", "skip"]
     return random.choice(actions)
 
-def step(action):
+def preform_action(action, cell_i, cell_j):
+    match action:
+        case "click":
+            click(startX + cell_i * 32, startY + cell_j * 32)
+        case "flag":
+            right_click(startX + cell_i * 32, startY + cell_j * 32)
+        case "skip":
+            return 0
+
+def reward_check(cell_i, cell_j, image):
+    done = False
+
+    if image.getpixel((startX + cell_i * 32, startY + cell_j * 32)) == (255, 0, 0):
+        return -10, True  ## hit a bomb and failed
+
+    if image.getpixel((winFaceX, winFaceY)) == (0, 0, 0):
+        return 50, True  ## Finished the board and won
+
+    num = check_cell_state(cell_i, cell_j, image)
+    if 0 < num < 9:  ## Hit a number
+        reward = 1
+    else:
+        reward = 0  ## Skipped
+
+    return reward, done
+
+def step(action, cell_i, cell_j):
+    preform_action(action, cell_i, cell_j)
+
+    image = pyautogui.screenshot()
+    reward, done = reward_check(cell_i, cell_j, image)
+    new_state = new_state_finder(image)
 
     return new_state, reward, done
 
-def preform_action(action):
-    match action
-        case (0, 0, 255):  ## Blue 1
-            num = 1
-        case (0, 123, 0):  ## Green 2
-            num = 2
-        case (255, 0, 0):  ## Red 3
-            num = 3
+def update_Q(state, action, reward, new_state):
+
+    return 0
 
 def main():
     global running
@@ -295,18 +320,15 @@ def main():
         state = reset()
         done = False
         while running and not done:
-            cell_value, flags, unknowns = state
+            cell_value, cell_i, cell_j, flags, unknowns = state
 
             action = choose_action(state)
 
-            preform_action(action)
+            new_state, reward, done = step(action, cell_i, cell_j)
 
+            update_Q(state, action, reward, new_state)  ## Q is quality btw :)
 
-            """
-            new_state, reward, done = step(action)
-            update_Q(state, action, reward, new_state)
             state = new_state  ## get the new state
-            """
 
 if __name__ == "__main__":
     main()
