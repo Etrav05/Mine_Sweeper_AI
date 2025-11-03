@@ -1,47 +1,69 @@
-# Mine Sweeper AI
+# Minesweeper AI
 
-A simple AI to beat the game of "Minesweeper"
+A simple AI to play and learn the game of Minesweeper using Q-learning. The AI interacts with a [Web-based](https://minesweeperonline.com/#beginner-200) Minesweeper game, recognizing numbers, flags, and unknown tiles, and deciding actions to maximize its win rate.
+
 
 ## Description
 
-TODO
+This program automates Minesweeper gameplay by:
+* Detecting cell states from a Minesweeper window using screen captures
+* Using reinforcement learning (Q-learning) to decide whether to click, flag, or skip a cell
+* Continuously improving its strategy over multiple games
+* Providing a way to quit anytime by pressing q
+
 
 ## Getting Started
 
 ### Dependencies
 
-TODO
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+* Python 3.11+
+* Windows 10 or higher
+* Python libraries:
+
+```
+pip install pyautogui keyboard pywin32
+```
+* _Minesweeper game must be open on the left side of the screen, zoomed to 200%, and window zoom set to 100%_
+
 
 ### Installing
 
-TODO
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Clone or download this repository
+* Ensure the Minesweeper game is open and positioned correctly
+* Open a terminal in the project directory
+* Install dependencies:
 
-### Executing program
-
-
-* Minesweeper tab is docked on the left side of your screen
-* Game display is set to 200%
-* Zoom in on the tab is set to 100%
 ```
-code blocks for commands
+pip install -r requirements.txt
 ```
+* (or install manually with pip install pyautogui keyboard pywin32)
 
-## Help
 
-TODO
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+### Executing Program
+
+1. Run the AI script:
+  * python MineSweeping.py
+2. The AI will start training and playing automatically
+3. Press 'q' at any time to force quit the program
+4. During the program, the AI will take actions such as clicking, flagging, and skipping cells, updating its Q-learning model in real-time.
+
+* Notes:
+  * Minesweeper window must be visible, set to 9x9 (beginner), and display --> zoom set to 200%
+  * Initial coordinates in the script (startX, startY) are set for a standard Minesweeper layout. Adjust if your screen setup differs.
+
+
+### Help
+* If the AI clicks the wrong location, check your screen resolution and Minesweeper zoom (only works on beginner atm)
+* Ensure Minesweeper tab is docked to the left of your screen and zoom settings match the script defaults
+* For debugging:
+  * TODO
+* To reset the AI after a win/loss, it types "Etrav" automatically and clicks OK to restart (hopefully)
+
 
 ## Authors
 
-Evan Travis
-@Etrav05
+Evan Travis: @Etrav05
+
 
 ## Version History
 
