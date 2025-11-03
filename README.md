@@ -46,6 +46,14 @@ Evan Travis
 ## Version History
 
 
+* 0.7.1
+  * Added functions to:
+    * Perform the selected action (random atm)
+    * Check action for its reward value
+    * Step function to actually call the above functions and move the game state forward
+  * Started implementing a function to update the Q value of the AI. This is going to be the brain of the AI in which it will learn (given the reward values) what actions are good or bad
+
+
 * 0.7.0
   * Started to refactor the program into a real AI
   * Reinforcement learning algorithm --> Q-learning
