@@ -9,7 +9,7 @@ This program automates Minesweeper gameplay by:
 * Detecting cell states from a Minesweeper window using screen captures
 * Using reinforcement learning (Q-learning) to decide whether to click, flag, or skip a cell
 * Continuously improving its strategy over multiple games
-* Providing a way to quit anytime by pressing q
+* Providing a way to quit anytime by pressing 'q'
 
 
 ## Getting Started
