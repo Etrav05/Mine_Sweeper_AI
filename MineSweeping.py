@@ -50,18 +50,6 @@ def right_click(x, y):
 def move_mouse(x, y):
     win32api.SetCursorPos((x, y))
 
-def click_each_cell():
-    for i in range(9):
-        y = startY + i * 32
-        for j in range(9):
-           click(startX + j * 32, y)
-
-def random_clicks():
-    random_x = random.randint(0, 8) * 32
-    random_y = random.randint(0, 8) * 32
-
-    click(startX + random_x, startY + random_y)
-
 def check_cell_state(x, y, image):
     num = 0
 
@@ -111,22 +99,6 @@ def display_map(grid):
             print(f"{grid[i][j]}  ", end="")
         print()  ## new line
 
-def win_lose(plays):
-    state = False
-
-    ## check frown/glasses (win/lose)
-    if pyautogui.pixel(winFaceX, winFaceY)[0] == 0:
-        print("==== WINNER ====")
-        state = True
-
-    if pyautogui.pixel(loseFaceX, loseFaceY)[0] == 0:
-        plays += 1
-        click(390, 213)
-        print(f"Restarting, now on game: {plays}")
-        state = False
-
-    return state, plays
-
 def check_around_cell(i, j, image):
     unknown_count = 0
     flag_count = 0
@@ -150,130 +122,82 @@ def check_around_cell(i, j, image):
 
     return flag_count, unknown_count
 
-def flag_around_cell(grid, i, j, image):
-    flagged_any = False
-
-    for di in [-1, 0, 1]:  ## using delta offsets to get all combinations of 9 cell area
-        for dj in [-1, 0, 1]:
-            if di == 0 and dj == 0:  ## skip the cell itself
-                continue
-
-            ni, nj = i + di, j + dj
-            if 0 <= ni < rows and 0 <= nj < columns:
-                if grid[ni][nj] == '-':
-                    x = startX + nj * 32
-                    y = startY + ni * 32
-
-                    if image.getpixel((x + flagX, y + flagY)) != (255, 0, 0) or grid[ni][nj] != 'f':  ## Check if not already flagged
-                        right_click(x, y)
-                        flagged_any = True
-                        grid[ni][nj] = 'f'
-
-    return flagged_any
-
-def flag_area_around_cell(grid):
-    image = pyautogui.screenshot()  ## just capture one image for performance
-    flagged = False
-
-    for i in range(9):
-        for j in range(9):
-            val = grid[i][j]
-            if val == '-' or val == 0:
-                continue
-
-            unknown_count, flag_count = check_around_cell(i, j, image)
-
-            ## skip useless cells
-            if flag_count == val or unknown_count == 0:
-                continue
-
-            if val == unknown_count:  ## if the value of a cell == the amount of unknowns
-                if flag_around_cell(grid, i, j, image):  ## that means we can click the unknown cell
-                    flagged = True
-
-    return flagged
-
-def click_solved_cell(grid):
-    image = pyautogui.screenshot()  ## capture one screenshot for performance
-
-    for i in range(9):
-        for j in range(9):
-            val = grid[i][j]
-            if val == '-' or val == 0:
-                continue
-
-            unknown_count, flag_count = check_around_cell(i, j, image)
-
-            if flag_count == val and unknown_count != 0:
-                for di in [-1, 0, 1]:
-                    for dj in [-1, 0, 1]:
-                        if di == 0 and dj == 0:
-                            continue
-                        ni, nj = i + di, j + dj
-                        if 0 <= ni < rows and 0 <= nj < columns:
-                            if grid[ni][nj] == '-':  ## unknown cell
-                                x = startX + nj * 32
-                                y = startY + ni * 32
-                                click(x, y)
-                                grid[ni][nj] = '0'  ## mark solved
-
-def auto_flag_loop():
-    global running
-    image = pyautogui.screenshot()
-
-    plays = 0
-    grid = define_map()
-
-    while running:
-        changed = flag_area_around_cell(grid)  ## loop through until there are no changes
-        state, plays = win_lose(plays)
-
-        if not changed:
-            click_solved_cell(grid)
-            print("No more flags")
-            break
-
 ok_buttonX = 560
 ok_buttonY = 240
 
 ## Functions to make this program a Reinforcement Learning AI --> Q-learning
-def find_first_cell(grid):
-    unknowns = []  ## A list of all hidden cells ('-')
-    for i in range(rows):
-        for j in range(columns):
-            if grid[i][j] == '-':
-                unknowns.append((i, j))
 
-    i, j = random.choice(unknowns)  ## randomly choose one of the unknown cells
-    return i, j, -1  ## unknowns == -1  (flags == 9)
+## Q-learning variables
+Q_dictionary = {}  ## Quality dictionary --> (state, action), value
+
+## All caps, so we can use them everywhere (hyperparameters)
+ALPHA = 0.5    ## learning rate
+GAMMA = 0.9    ## reward loss
+EPSILON = 0.1  ## exploration probability
+
+actions = ["click", "flag", "skip"]
+
+def get_all_unknowns(grid):
+    return [(i, j) for i in range(rows) for j in range(columns) if grid[i][j] == '-']
+
+def get_cell_info(cell_i, cell_j, grid, image):
+    cell_value = grid[cell_i][cell_j] if grid[cell_i][cell_j] != '-' else 0
+
+    flags, unknowns = check_around_cell(cell_i, cell_j, image)
+    return cell_value, flags, unknowns
+
+def get_state(cell_value, flags_around, unknowns_around):
+    return (cell_value, flags_around, unknowns_around)
+
+def pick_random_unknown(unknown_cells):
+    if not unknown_cells:
+        return None, None
+    cell = random.choice(unknown_cells)
+    unknown_cells.remove(cell)
+    return cell
+
 
 def reset():
-    keyboard.write("Etrav")  ## type name for wins
-
+    keyboard.write("Etrav")  # type name for wins
     click(ok_buttonX, ok_buttonY)
     click(winFaceX, winFaceY)
-    click(400, 400)  ## center of the board
+    click(400, 400)  # center of the board
 
     image = pyautogui.screenshot()
-
     grid = define_map(image)
-    i, j, cell_value = find_first_cell(grid)
+    unknown_cells = get_all_unknowns(grid)
+
+    first_cell = pick_random_unknown(unknown_cells)
+    if first_cell:
+        cell_i, cell_j = first_cell
+        cell_value, flags, unknowns_around = get_cell_info(cell_i, cell_j, grid, image)
+        state = get_state(cell_value, flags, unknowns_around)
+    else:
+        cell_i = cell_j = None
+        state = None
+
+    return grid, unknown_cells, cell_i, cell_j, state
+
+def new_state_finder(image, grid, unknown_cells):
+    i, j, cell_value = pick_random_unknown(unknown_cells)
+
+    if i is None:
+        return None, None, None, None, None, grid
+
     flags, unknowns = check_around_cell(i, j, image)
 
-    return cell_value, i, j, flags, unknowns
-
-def new_state_finder(image):
-    grid = define_map(image)
-    i, j, cell_value = find_first_cell(grid)
-    flags, unknowns = check_around_cell(i, j, image)
-
-    return cell_value, i, j, flags, unknowns
+    return cell_value, i, j, flags, unknown_cells, grid
 
 def choose_action(state):
-    actions = ["click", "flag", "skip"]
-    return random.choice(actions)
+    if state not in Q_dictionary:  ## If we come up to a new action, add it
+        Q_dictionary[state] = {a: 0.0 for a in actions}
 
-def preform_action(action, cell_i, cell_j):
+    if random.random() < EPSILON:  ## Choose a random action sometimes
+        return random.choice(actions)
+    else:  ## Else just go with the action that has had the best return (reward)
+        return max(Q_dictionary[state], key=Q_dictionary[state].get)
+
+def perform_action(action, cell_i, cell_j):
     match action:
         case "click":
             click(startX + cell_i * 32, startY + cell_j * 32)
@@ -299,36 +223,62 @@ def reward_check(cell_i, cell_j, image):
 
     return reward, done
 
-def step(action, cell_i, cell_j):
-    preform_action(action, cell_i, cell_j)
-
+def step(action, cell_i, cell_j, grid, unknown_cells):
+    perform_action(action, cell_i, cell_j)
     image = pyautogui.screenshot()
+
     reward, done = reward_check(cell_i, cell_j, image)
-    new_state = new_state_finder(image)
 
-    return new_state, reward, done
+    grid[cell_i][cell_j] = check_cell_state(cell_i, cell_j, image) or 0  ## update grid cell
 
-def update_Q(state, action, reward, new_state):
+    next_cell = pick_random_unknown(unknown_cells)
+    if next_cell:
+        ni, nj = next_cell
+        cell_value, flags, unknowns = get_cell_info(ni, nj, grid, image)
+        next_state = get_state(cell_value, flags, unknowns)
+        return reward, next_state, done, ni, nj
+    else:
+        return reward, None, done, None, None
 
-    return 0
+def update_Q(state, action, reward, next_state):
+    if next_state not in Q_dictionary:
+        Q_dictionary[next_state] = {a: 0.0 for a in actions}
+
+    max_next = max(Q_dictionary[next_state].values())
+
+    ## Q-learning function :)
+    Q_dictionary[state][action] += ALPHA * (reward + GAMMA * max_next - Q_dictionary[state][action])
+
 
 def main():
     global running
     threading.Thread(target=watch_for_quit, daemon=True).start()  ## start another thread so we can force quit
 
-    for training in range(10):
-        state = reset()
+    for training in range(500):
+        state_grid = define_map(pyautogui.screenshot())
+        unknown_cells = get_all_unknowns(state_grid)
+
+        cell = pick_random_unknown(unknown_cells)
+        if not cell:
+            continue
+        cell_i, cell_j = cell
+        cell_value, flags, unknowns = get_cell_info(cell_i, cell_j, state_grid, pyautogui.screenshot())
+        current_state = get_state(cell_value, flags, unknowns)
+
+        grid, unknown_cells, cell_i, cell_j, current_state = reset()
         done = False
-        while running and not done:
-            cell_value, cell_i, cell_j, flags, unknowns = state
 
-            action = choose_action(state)
+        while running and not done and unknown_cells:
+            action = choose_action(current_state)
+            reward, next_state, done, next_i, next_j = step(action, cell_i, cell_j, grid, unknown_cells)
 
-            new_state, reward, done = step(action, cell_i, cell_j)
-
-            update_Q(state, action, reward, new_state)  ## Q is quality btw :)
-
-            state = new_state  ## get the new state
+            if next_state:
+                update_Q(current_state, action, reward, next_state)
+                current_state = next_state
+                cell_i, cell_j = next_i, next_j
+            else:
+                update_Q(current_state, action, reward, current_state)
+                done = True
 
 if __name__ == "__main__":
     main()
