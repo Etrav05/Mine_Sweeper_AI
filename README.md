@@ -46,6 +46,11 @@ Evan Travis
 ## Version History
 
 
+* 0.7.2
+  * Refactored all functions to work with the update_Q function
+  * Currently don't know if it's learning yet, but it's moving 
+
+
 * 0.7.1
   * Added functions to:
     * Perform the selected action (random atm)
