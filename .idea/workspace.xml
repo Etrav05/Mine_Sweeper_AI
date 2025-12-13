@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it">
+    <list default="true" id="256dc2ef-b39f-40ee-8a07-e696249f40ed" name="Changes" comment="Refactored from the update_Q function up&#10;&#10;However, might be learning now, not sure yet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MineSweeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeping.py" afterDir="false" />
     </list>
@@ -170,7 +170,39 @@
       <option name="project" value="LOCAL" />
       <updated>1761863374500</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updated all click functions to uses my prebuilt ones (accidently used pyautogui's click functions 2 times)">
+      <option name="closed" value="true" />
+      <created>1762121436060</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762121436060</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Updated all click Started refactoring the program into a reinforcement learning algorithm --&gt; Q-learning&#10;&#10;Added functions for reseting the game board, finding a new state of a game board, and choosing a random action (temp)&#10;&#10;Started implementing a preform action function">
+      <option name="closed" value="true" />
+      <created>1762126606378</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1762126606378</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added functions to preform the selected action (random atm), check action for reward, and a step function to actually call these functions and move the AI forward &#10;&#10;Starting to implement a function to update the Q value of the AI, this one will be the actual brain of the AI">
+      <option name="closed" value="true" />
+      <created>1762128815505</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1762128815505</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactored from the update_Q function up&#10;&#10;However, might be learning now, not sure yet">
+      <option name="closed" value="true" />
+      <created>1762133857382</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1762133857382</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -194,16 +226,10 @@
     <MESSAGE value="Flagging actually works now (:" />
     <MESSAGE value="Fixed flagging (again)&#10;&#10;Redid the logic as to make it so the AI will create a 2d array of the game board --&gt; Check for flags --&gt; Click solved cells --&gt; repeat&#10;&#10;As mentioned above, added a function to click solved cells (value == amount of flags in the 3x3 area)" />
     <MESSAGE value="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed a lot of functions to now take a single screenshot and use &quot;image.getpixel&quot; rather than move the cursor to a certain position to check (wish i had know this earlier)&#10;&#10;Saves quite a lot of time, AI is now averaging ~7 seconds&#10;&#10;Moreover, refactored the grid definition function to create the grid cell by cell rather than create a 9x9 grid and fill it" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/MineSweeping.py</url>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Updated all click functions to uses my prebuilt ones (accidently used pyautogui's click functions 2 times)" />
+    <MESSAGE value="Updated all click Started refactoring the program into a reinforcement learning algorithm --&gt; Q-learning&#10;&#10;Added functions for reseting the game board, finding a new state of a game board, and choosing a random action (temp)&#10;&#10;Started implementing a preform action function" />
+    <MESSAGE value="Added functions to preform the selected action (random atm), check action for reward, and a step function to actually call these functions and move the AI forward &#10;&#10;Starting to implement a function to update the Q value of the AI, this one will be the actual brain of the AI" />
+    <MESSAGE value="Refactored from the update_Q function up&#10;&#10;However, might be learning now, not sure yet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored from the update_Q function up&#10;&#10;However, might be learning now, not sure yet" />
   </component>
 </project>

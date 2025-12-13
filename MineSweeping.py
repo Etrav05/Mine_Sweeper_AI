@@ -2,8 +2,12 @@ import pyautogui
 import time
 import keyboard
 import random
-import win32api, win32con
+import win32api
+import win32con
 import threading
+
+import json
+import os
 
 running = True  ## shared flag for stopping threads
 def watch_for_quit():
@@ -99,6 +103,7 @@ def display_map(grid):
             print(f"{grid[i][j]}  ", end="")
         print()  ## new line
 
+""" Original area check
 def check_around_cell(i, j, image):
     unknown_count = 0
     flag_count = 0
@@ -121,6 +126,25 @@ def check_around_cell(i, j, image):
                     flag_count += 1
 
     return flag_count, unknown_count
+"""
+
+def discrete_state_check(cell_value, flags_around, unknowns_around):
+    ## Convert cell_value to ranges rather than individual values
+    if cell_value == 0:
+        cell_category = 'empty'
+    elif 1 <= cell_value <= 2:
+        cell_category = 'low'
+    elif 3 <= cell_value <= 5:
+        cell_category = 'medium'
+    else:
+        cell_category = 'high'
+
+    ## Simplify flag/unknown counts (0, 1, 2+)
+    flag_cat = min(flags_around, 2)
+    unknown_cat = min(unknowns_around, 2)
+
+    return cell_category, flag_cat, unknown_cat
+
 
 ok_buttonX = 560
 ok_buttonY = 240
@@ -144,10 +168,11 @@ def get_cell_info(cell_i, cell_j, grid, image):
     cell_value = grid[cell_i][cell_j] if grid[cell_i][cell_j] != '-' else 0
 
     flags, unknowns = check_around_cell(cell_i, cell_j, image)
+
     return cell_value, flags, unknowns
 
 def get_state(cell_value, flags_around, unknowns_around):
-    return (cell_value, flags_around, unknowns_around)
+    return cell_value, flags_around, unknowns_around
 
 def pick_random_unknown(unknown_cells):
     if not unknown_cells:
@@ -155,7 +180,6 @@ def pick_random_unknown(unknown_cells):
     cell = random.choice(unknown_cells)
     unknown_cells.remove(cell)
     return cell
-
 
 def reset():
     keyboard.write("Etrav")  # type name for wins
@@ -208,18 +232,23 @@ def perform_action(action, cell_i, cell_j):
 
 def reward_check(cell_i, cell_j, image):
     done = False
+    reward = 0
 
     if image.getpixel((startX + cell_i * 32, startY + cell_j * 32)) == (255, 0, 0):
-        return -10, True  ## hit a bomb and failed
+        return -50, True  ## hit a bomb and failed
 
     if image.getpixel((winFaceX, winFaceY)) == (0, 0, 0):
-        return 50, True  ## Finished the board and won
+        return 100, True  ## Finished the board and won
 
     num = check_cell_state(cell_i, cell_j, image)
-    if 0 < num < 9:  ## Hit a number
-        reward = 1
-    else:
-        reward = 0  ## Skipped
+
+    ## Reward based on number revealed (higher = play safer)
+    if num == 0:
+        reward = 2    ## Empty = very safe, boost reward
+    elif 1 <= num <= 2:
+        reward = 1    ## Low number = less risky
+    elif 3 <= num <= 8:
+        reward = 0.5  ## High number = risky
 
     return reward, done
 
