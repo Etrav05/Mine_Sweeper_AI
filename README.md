@@ -67,6 +67,10 @@ Evan Travis: @Etrav05
 
 ## Version History
 
+* 0.7.3
+  * Created a discrete state check function
+  * This function will reduce the number of states the AI can face, improving training time 
+
 
 * 0.7.2
   * Refactored all functions to work with the update_Q function
